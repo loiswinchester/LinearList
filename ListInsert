@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<stdbool.h>
+#define MaxSize 10 //顺序表的静态分配 定义最大长度，即元素个数
+typedef struct {
+	int data[MaxSize];//用静态数组存放数据元素，元素类型是int，伪代码中用ElemType
+	int length;//顺序表的当前长度
+}SqList;//顺序表的类型定义（静态分配方式）
+//初始化
+void InitList(SqList L) {
+	for (int i = 0; i < MaxSize; i++)	
+		L.data[i] = 0;
+	L.length = 0;
+}
+
+ListInsert(SqList L, int i, int e) {//在第i个节点，下标是i-1，插入元素e
+	if (i<1 || i>L.length + 1)
+		return false;
+	if (L.length >= MaxSize)//存储空间已满，不能插入
+		return false;
+	for (int j = L.length; j > i; j--)
+		L.data[j] = L.data[j - 1];
+	L.data[i-1] = e;//位序从1开始。但是数组下标从0开始
+	L.length++;
+	return true;
+}
+
+int main() {
+	SqList L;
+	InitList(L);
+	ListInsert(L, 3, 3);
+	//插入元素
+	return 0;
+}
