@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<stdbool.h>
+#include <malloc.h>
+//不带头节点的单链表
+typedef struct LNode {//typedef：数据类型重命名；typedef<数据类型><别名>
+	int data;
+	struct LNode *next;//指针指向下一个节点
+} LNode, * LinkList;
+
+//初始化一个空的单链表（不带头节点）
+//bool InitList(LinkList L) {//&L
+//	L = NULL;//空表，此表中还没有任何节点
+//	return true;
+//}
+bool InitList(LinkList L) {
+	L = (LNode*)malloc(sizeof(LNode));//分配一个头节点
+	if (L == NULL)//内存不足，分配失败
+		return false;
+	L->data = NULL;//头节点之后暂时还没有节点
+	return true;
+}
+void test() {
+	LinkList L;//声明一个指向单链表的指针
+	InitList(L);
+}
+//判断是否为空
+bool Empty(LinkList L) {
+	if (L == NULL)//带头节点判空：L->next==NULL
+		return true;
+	else
+		return false;
+}
