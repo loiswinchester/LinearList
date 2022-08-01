@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<malloc.h>
+typedef struct DNode {
+	int data;
+	struct DNode* prior, * next;
+}DNode,*DLinkList;
+//初始化双链表(带头节点)
+bool InitLinkList(DLinkList &L) {
+	L = (DNode*)malloc(sizeof(DNode));
+	if (L == NULL)
+		return false;
+	L ->prior = NULL;//头节点prior永远指向null
+	L ->next = NULL;//目前为空的双链表
+	return true;
+}
+void testDLinkList() {
+	DLinkList L;
+	InitLinkList(L);
+}
+bool Empty(DLinkList L) {
+	if (L->next == NULL)
+		return true;
+	else
+		return false;
+}
+//双链表的插入：在p节点之后插入s节点
+bool InsertNextNode(DNode* p, DNode* s) {
+	if (p == NULL || s == NULL)
+		return false;
+	s->next = p->next;
+	if(p->next!=NULL)
+		p->next->prior = s;
+	s->prior = p;
+	p->next = s;
+	return true;
+}
+//删除指定p节点之后的q节点
+bool DeleteNextDNode(DNode* p) {
+	if (p == NULL)
+		return false;
+	DNode* q = p->next;//找到p节点的后继节点q
+	if (q == NULL)//p没有后继
+		return false;
+	p->next = q->next;
+	if (q->next != NULL)//q节点不是最后一个节点
+		q->next->prior = p;
+	free(q);
+	return true;
+}
+//销毁双链表
+void DestoryList(DLinkList& L) {
+	while (L->next!=NULL)
+		DeleteNextDNode(L);
+	free(L);//释放头节点
+	L->next = NULL;//头指针指向null
+}
